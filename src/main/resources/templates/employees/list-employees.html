@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Employee Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+	<h3>Employee Directory</h3>
+	<hr>
+	<div>
+		USER : <span sec:authentication="name"></span>
+		<br>
+		ROLE(S): <span sec:authentication="principal.authorities"></span>
+	</div>
+	<br><br>
+    <form th:action="@{/employees/search}" class="form-inline">
+		<a class="btn btn-primary btn-sm mr-5 mb-3"
+		   th:href="@{/employees/addForm}">
+			Add Employee
+		</a>
+
+		<input class="form-control  ml-5 mr-sm-2 mb-3" type="search" name="employeeName" placeholder="Search by name" />
+
+		<button class="btn btn-success mb-3" type="submit">Search</button>
+    </form>
+
+
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Action Links</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tempEmployee : ${employees}">
+				<td th:text="${tempEmployee.id}" />
+				<td th:text="${tempEmployee.firstName}" />
+				<td th:text="${tempEmployee.lastName}" />
+				<td th:text="${tempEmployee.email}" />
+				<td>
+					<div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+						<a th:href="@{/employees/updateForm(employeeId=${tempEmployee.id})}"
+						   class="btn btn-info btn-sm">
+							UPDATE
+						</a>
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+					   		class="btn btn-danger btn-sm"
+					   		onclick="if(!(confirm('Are You Sure You Want To Delete This Employee? ')))return false">
+							DELETE
+						</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Add a logout button -->
+	<form action="#" th:action="@{/logout}"
+			   method="POST">
+
+		<input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+
+	</form>
+
+</div>
+
+</body>
+</html>
+
+
+
