@@ -34,21 +34,21 @@ public class EmployeeController {
 		// add to the spring model
 		theModel.addAttribute("employees", theEmployees);
 		
-		return "employees/list-employees";
+		return "list-employees";
 	}
 	
 	//Add Mapping to show add form
 	
-	@GetMapping("/addForm")
+	@GetMapping("/showFormForAdd")
 	public String showAddForm(Model theModel) {
 		
 		Employee theEmployee = new Employee();
 		theModel.addAttribute("employee", theEmployee);
 		
-		return "employees/employee-form";
+		return "employee-form";
 	}
 
-	@GetMapping("/updateForm")
+	@GetMapping("/showFormForUpdate")
 	public String showUpdateForm(@RequestParam("employeeId") int theId, 
 			Model theModel) {
 		//Get the Employee From the database
@@ -58,7 +58,7 @@ public class EmployeeController {
 		//set the attribute to the Model
 		theModel.addAttribute("employee", theEmployee);
 		
-		return "employees/employee-form";
+		return "employee-form";
 	}
 	
 	//Add Mapping for save method
@@ -92,7 +92,7 @@ public class EmployeeController {
 		theModel.addAttribute("employees", theEmployees);
 		
 		// send to /employees/list
-		return "employees/list-employees";
+		return "list-employees";
 	}	
 }
 

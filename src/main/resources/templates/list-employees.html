@@ -20,7 +20,7 @@
 
 	<h3>Employee Directory</h3>
 	<hr>
-	<div>
+	<div sec:authorize="isAuthenticated()">
 		USER : <span sec:authentication="name"></span>
 		<br>
 		ROLE(S): <span sec:authentication="principal.authorities"></span>
@@ -28,7 +28,7 @@
 	<br><br>
     <form th:action="@{/employees/search}" class="form-inline">
 		<a class="btn btn-primary btn-sm mr-5 mb-3"
-		   th:href="@{/employees/addForm}">
+		   th:href="@{/employees/showFormForAdd}">
 			Add Employee
 		</a>
 
@@ -55,8 +55,8 @@
 				<td th:text="${tempEmployee.lastName}" />
 				<td th:text="${tempEmployee.email}" />
 				<td>
-					<div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
-						<a th:href="@{/employees/updateForm(employeeId=${tempEmployee.id})}"
+					<div sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+						<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
 						   class="btn btn-info btn-sm">
 							UPDATE
 						</a>
