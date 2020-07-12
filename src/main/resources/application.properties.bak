@@ -9,9 +9,8 @@ spring.datasource.maxActive=10
 spring.datasource.maxIdle=5
 spring.datasource.minIdle=2
 spring.datasource.initialSize=5
-spring.datasource.url=${JDBC_DATABASE_URL}
 
-#security.datasource.jdbc-url = ${JDBC_DATABASE_URL}
+security.datasource.jdbc-url = ${JDBC_DATABASE_URL}
 
 #security.datasource.jdbc-url = jdbc:postgresql://ec2-34-206-31-217.compute-1.amazonaws.com:5432/d53jqo79k7m8vq
 #security.datasource.username = nofqclirjibopp
