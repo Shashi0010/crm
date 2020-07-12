@@ -12,27 +12,27 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 @Configuration
+@EnableJpaRepositories(basePackages = {"${spring.data.jpa.repository.packages}"})
 public class DemoDataSourceConfig {
 
-	@Value("${spring.datasource.url}")
-	private String dbUrl;
-
-	
+	@Primary
 	@Bean
-	public DataSource dataSource() {
-      HikariConfig config = new HikariConfig();
-      config.setJdbcUrl(dbUrl);
-      return new HikariDataSource(config);
-	}
-	
-	@Bean
-	public LocalContainerEntityManagerFactoryBean 
-	entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource) {
+	@ConfigurationProperties(prefix = "app.datasource")
+	public DataSource appDataSource() {
 		
-		return builder.dataSource(dataSource).build();
+		return DataSourceBuilder.create().build();
 	}
 	
 	@Bean
+	@ConfigurationProperties(prefix = "spring.data.jpa.entity")
+	public LocalContainerEntityManagerFactoryBean 
+	entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource appDataSource) {
+		
+		return builder.dataSource(appDataSource).build();
+	}
+	
+	@Bean
+	@ConfigurationProperties(prefix = "security.datasource")
 	public DataSource securityDataSource() {
 		return DataSourceBuilder.create().build();
 	}
