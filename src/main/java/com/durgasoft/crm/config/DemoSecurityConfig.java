@@ -15,9 +15,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	@Qualifier("securityDataSource")
-	private DataSource securityDataSource;
+	private final DataSource securityDataSource;
+
+	public DemoSecurityConfig(@Qualifier("securityDataSource") DataSource securityDataSource) {
+		this.securityDataSource = securityDataSource;
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

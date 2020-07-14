@@ -20,7 +20,7 @@ public class EmployeeController {
 	private final EmployeeService employeeService;
 	
 	public EmployeeController(EmployeeService theEmployeeService) {
-		this.employeeService = theEmployeeService;
+		employeeService = theEmployeeService;
 	}
 
 	// add mapping for "/list"
@@ -34,7 +34,7 @@ public class EmployeeController {
 		// add to the spring model
 		theModel.addAttribute("employees", theEmployees);
 		
-		return "list-employees";
+		return "/employees/list-employees";
 	}
 	
 	//Add Mapping to show add form
@@ -45,7 +45,7 @@ public class EmployeeController {
 		Employee theEmployee = new Employee();
 		theModel.addAttribute("employee", theEmployee);
 		
-		return "employee-form";
+		return "/employees/employee-form";
 	}
 
 	@GetMapping("/showFormForUpdate")
@@ -58,7 +58,7 @@ public class EmployeeController {
 		//set the attribute to the Model
 		theModel.addAttribute("employee", theEmployee);
 		
-		return "employee-form";
+		return "/employees/employee-form";
 	}
 	
 	//Add Mapping for save method
@@ -92,15 +92,6 @@ public class EmployeeController {
 		theModel.addAttribute("employees", theEmployees);
 		
 		// send to /employees/list
-		return "list-employees";
+		return "/employees/list-employees";
 	}	
 }
-
-
-
-
-
-
-
-
-
